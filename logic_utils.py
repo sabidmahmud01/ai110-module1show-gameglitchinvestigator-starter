@@ -11,6 +11,8 @@ def parse_guess(raw: str):
     """
     raise NotImplementedError("Refactor this function from app.py into logic_utils.py")
 
+# This function was already implemented in app.py, but we want to move it here so we can test it.
+# I used AI to implement the correct hint and also updated it to coerce inputs to int so it works when passed string values (as happens in some tests).
 
 def check_guess(guess, secret):
     """
@@ -18,7 +20,14 @@ def check_guess(guess, secret):
 
     outcome examples: "Win", "Too High", "Too Low"
     """
-    raise NotImplementedError("Refactor this function from app.py into logic_utils.py")
+    guess = int(guess)
+    secret = int(secret)
+    if guess == secret:
+        return "Win", "🎉 Correct!"
+    if guess > secret:
+        return "Too High", "📉 Go LOWER!"
+    else:
+        return "Too Low", "📈 Go HIGHER!"
 
 
 def update_score(current_score: int, outcome: str, attempt_number: int):
