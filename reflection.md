@@ -53,8 +53,16 @@ The hints were always backwards. The place where you'd expect the hint to be low
 ## 4. What did you learn about Streamlit and state?
 
 - In your own words, explain why the secret number kept changing in the original app.
+
+  The secret number didn't actually keep changing mid-game; it was stable because it was stored in session state. The real problem was that the "New Game" button didn't reset the game status properly, so after winning or losing, the UI would stop working, making it feel like the secret changed or the game was broken.
+
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
+
+  Imagine every time you click a button in a web app, the entire code runs again from scratch—like reloading the page but keeping some memory. That's a "rerun" in Streamlit. Session state is like a persistent backpack that holds your app's data (like scores or game state) across these reruns, so you don't lose progress when the code restarts.
+
 - What change did you make that finally gave the game a stable secret number?
+
+  I moved the secret number generation inside a check for `if "secret" not in st.session_state`, so it only gets set once at the start of the session. Before, it was being regenerated on every rerun, but since session state persists, it stayed the same anyway—the issue was elsewhere.
 
 ---
 
@@ -62,5 +70,13 @@ The hints were always backwards. The place where you'd expect the hint to be low
 
 - What is one habit or strategy from this project that you want to reuse in future labs or projects?
   - This could be a testing habit, a prompting strategy, or a way you used Git.
+
+  I want to reuse the habit of writing unit tests for core logic functions (like `check_guess`) and running them with pytest after every change. It helped catch bugs early and gave confidence that fixes didn't break things.
+
 - What is one thing you would do differently next time you work with AI on a coding task?
+
+  Next time, I'd ask the AI for more specific code snippets or examples right away, instead of just describing the problem. That way, I can test their suggestions faster and iterate quicker.
+
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+
+  This project showed me that AI-generated code can be a great starting point but often has subtle bugs, especially with frameworks like Streamlit. Now I approach AI code with more skepticism and always test and verify manually before trusting it.

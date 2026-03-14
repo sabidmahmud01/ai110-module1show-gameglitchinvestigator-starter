@@ -25,13 +25,29 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+- [x] Describe the game's purpose. 
+
+  The game is a number guessing game where players try to guess a secret number within a range (based on difficulty: Easy 1-20, Normal 1-100, Hard 1-50). It provides hints ("too high" or "too low"), tracks attempts, and awards scores based on performance. The goal is to guess correctly before running out of attempts.
+
+- [x] Detail which bugs you found.
+
+  - The "New Game" button didn't work as expected; clicking it didn't reset the game state, so players had to refresh the browser to start over.
+  - The hints were backwards: when the guess was too high, it said "Go LOWER!" but should have said "Go HIGHER!" (and vice versa).
+  - The attempts counter showed mismatched numbers in different parts of the UI.
+  - The secret number appeared to change mid-game due to Streamlit reruns, but the real issue was session state not resetting properly.
+
+- [x] Explain what fixes you applied.
+
+  - Fixed the New Game button by resetting all session state variables (`status`, `score`, `attempts`, `history`, and `secret`) to their initial values when clicked, and used `st.rerun()` to refresh the UI immediately.
+  - Corrected the hint logic in `check_guess()` by swapping the "Too High" and "Too Low" messages and ensuring proper comparison.
+  - Refactored game logic functions (`check_guess`, `parse_guess`, etc.) into `logic_utils.py` for better organization and testability.
+  - Added unit tests in `tests/test_game_logic.py` to verify hint accuracy and win/lose conditions, and ran pytest to ensure fixes didn't break existing behavior.
+
+Overall, the project taught me about Streamlit's session state management and the importance of resetting state properly in interactive apps. AI (Copilot) was helpful for diagnosing issues and suggesting fixes, but I had to verify everything manually in the UI and with tests.
 
 ## 📸 Demo
 
-- [ ] [Insert a screenshot of your fixed, winning game here]
+- ![winning game picture](image.png)
 
 ## 🚀 Stretch Features
 
